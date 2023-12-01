@@ -61,7 +61,7 @@ func parseLineForNumbers(line string, supportNumbersAsWords bool) (int, error) {
 
 	for characterIndex, character := range line {
 		if unicode.IsDigit(character) {
-			digit, _ := strconv.Atoi(fmt.Sprintf("%c", character))
+			digit, _ := strconv.Atoi(string(character))
 			last = digit
 			if first == -1 {
 				first = digit
