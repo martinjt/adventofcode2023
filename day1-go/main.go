@@ -56,12 +56,12 @@ func getOutput(lines []string, allowNumberString bool, withOutput bool) (int, er
 }
 
 func parseLineForNumbers(line string, supportNumbersAsWords bool) (int, error) {
-	first := -1
-	last := -1
+	var first int = -1
+	var last int = -1
 
 	for characterIndex, character := range line {
 		if unicode.IsDigit(character) {
-			digit := int(character)
+			digit, _ := strconv.Atoi(fmt.Sprintf("%c", character))
 			last = digit
 			if first == -1 {
 				first = digit
@@ -86,7 +86,7 @@ func parseLineForNumbers(line string, supportNumbersAsWords bool) (int, error) {
 		return first, nil
 	}
 
-	stringAnswer := fmt.Sprintf("%c%c", first, last)
+	stringAnswer := fmt.Sprintf("%d%d", first, last)
 	value, err := strconv.Atoi(stringAnswer)
 	if err != nil {
 		return -1, fmt.Errorf("error parsing %s: %s", stringAnswer, err)
