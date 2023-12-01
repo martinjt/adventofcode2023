@@ -6,7 +6,7 @@ if (string.IsNullOrEmpty(filename))
 }
 
 var inputs = File.ReadAllLines(filename);
-var values = new List<int>();
+var firstValues = new List<int>();
 
 foreach (var input in inputs) {
     double? first = null;
@@ -24,7 +24,49 @@ foreach (var input in inputs) {
         }
     }
     var output =  int.Parse($"{first}{last}");
-    values.Add(output);
+    firstValues.Add(output);
 }
 
-Console.WriteLine($"Sum: {values.Sum()}");
+var numberStrings = new [] {
+    "one", "two", "three", "four",
+    "five", "six", "seven", "eight", "nine"
+};
+
+var secondValues = new List<int>();
+
+foreach (var input in inputs) {
+    double? first = null;
+    double? last = null;
+
+    for (int i = 0; i < input.Length; i++) {
+        if (char.IsDigit(input[i]) ) {
+            var number = char.GetNumericValue(input[i]);
+            if (first == null) {
+                first = number;
+                last = number;
+            } else {
+                last = number;
+            }
+            continue;
+        }
+        for (int j = 0; j < numberStrings.Length; j++) {
+            var numberString = numberStrings[j];
+            var numberValue = j + 1;
+            if (input[i..].StartsWith(numberString)) {
+                if (first == null) {
+                    first = numberValue;
+                    last = numberValue;
+                } else {
+                    last = numberValue;
+                }
+                break;
+            }
+        }
+    }
+
+    var output =  int.Parse($"{first}{last}");
+    secondValues.Add(output);
+}
+
+Console.WriteLine($"Puzzle 1 Sum: {firstValues.Sum()}");
+Console.WriteLine($"Puzzle 2 Sum: {secondValues.Sum()}");
