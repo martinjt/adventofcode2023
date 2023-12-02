@@ -33,7 +33,13 @@ var sumOfGames = games
     .Where(game => game.CanHaveGame(test))
     .Sum(game => game.GameNumber);
 
+var powerOfGames = games
+    .Select(g => g.MaxColourRequirements.Values.Aggregate(1, (acc, val) => acc * val))
+    .Sum();
+
+
 Console.WriteLine($"Sum of games: {sumOfGames}");
+Console.WriteLine($"Power of games: {powerOfGames}");
 
 
 class Game
